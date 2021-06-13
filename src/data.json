@@ -1,0 +1,60 @@
+{
+  "books": [
+    {
+      "id": "book1",
+      "title": "An Orphan's War",
+      "image": "/images/an-orphan's-war.png",
+      "description": "One of the best historical fiction books you will read this year - Kindle edition by Green, Molly.",
+      "price": 100,
+      "catagory": 1
+    },
+    {
+      "id": "book2",
+      "title": "The Seven Crystal Balls",
+      "image": "/images/tintin-the-seven-crystal-balls.png",
+      "description": "The Seven Crystal Balls (French: Les Sept Boules de Cristal) is the thirteenth volume of The Adventures of Tintin, the comics series by Belgian cartoonist Hergé.",
+      "price": 100,
+      "catagory": 2
+    },
+    {
+      "id": "book3",
+      "title": "The Hate U Give",
+      "image": "/images/the-hate-u-give.png",
+      "description": "The Hate U Give is a 2017 young adult novel by Angie Thomas. It is Thomas's debut novel, expanded from a short story she wrote in college in reaction to the police shooting of Oscar Grant.",
+      "price": 150,
+      "catagory": 1
+    },
+    {
+      "id": "book4",
+      "title": "Tintin and the Picaros",
+      "image": "/images/tintin-and-the-picaros.png",
+      "description": "Tintin and the Picaros is the twenty-third volume of The Adventures of Tintin, the comics series by Belgian cartoonist Hergé.",
+      "price": 100,
+      "catagory": 2
+    },
+    {
+      "id": "book5",
+      "title": "Tintin in the Congo",
+      "image": "/images/tintin-in-the-congo.png",
+      "description": "Tintin in the Congo is the second volume of The Adventures of Tintin, the comics series by Belgian cartoonist Hergé.",
+      "price": 140,
+      "catagory": 2
+    },
+    {
+      "id": "book6",
+      "title": "The Book of Lost Names",
+      "image": "/images/the-book-of-lost-names.png",
+      "description": "An engaging and evocative novel reminiscent of The Lost Girls of Paris and The Alice Network, The Book of Lost Names is a testament to the resilience of the human spirit and the power of bravery and love in the face of evil.",
+      "price": 500,
+      "catagory": 1
+    },
+    {
+      "id": "book7",
+      "title": "Tintin Land of the Soviets",
+      "image": "/images/tintin-in-the-land-of-the-soviets.png",
+      "description": "Tintin in the Land of the Soviets is the first volume of The Adventures of Tintin, the comics series by Belgian cartoonist Hergé.",
+      "price": 140,
+      "catagory": 2
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import Cart from './components/Cart';
 import Filter from './components/Filter';
 import Header from './components/Header';
 import data from './data.json';
+import { BOOK_TYPE } from "./constants";
 
 class App extends Component {
   constructor() {
@@ -12,8 +13,52 @@ class App extends Component {
       category: "",
       books: data.books,
       cartItems: [],
-      couponCode: ""
+      cartData: {
+        couponCode: "",
+        totalBill: 0,
+        discount: ""
+      }
+
     };
+  }
+
+  countTotalBill = (cartItems) => {
+    let childrenBooksCount = 0,
+      fictionBooksCount = 0,
+      childrenBooksTotal = 0,
+      fictionBooksTotal = 0,
+      totalBill = 0,
+      discount = "";
+
+    cartItems.forEach((book) => {
+      if (book.catagory === BOOK_TYPE.CHILDREN) {
+        childrenBooksCount += book.count;
+        childrenBooksTotal += book.count * book.price;
+      }
+      if (book.catagory === BOOK_TYPE.FICTION) {
+        fictionBooksCount += book.count;
+        fictionBooksTotal += book.count * book.price;
+      }
+    });
+
+    if (this.state.cartData.couponCode === "ABC") {
+      totalBill = (childrenBooksTotal + fictionBooksTotal) * 0.85;
+      discount = "15%"
+    } else {
+      if (childrenBooksCount >= 5) {
+        childrenBooksTotal = childrenBooksTotal * 0.9;
+        discount = "10%"
+      }
+
+      if (childrenBooksCount === 10 && fictionBooksCount === 10) {
+        totalBill = (childrenBooksTotal + fictionBooksTotal) * 0.95;
+        discount = "10% + 5%"
+      } else {
+        totalBill = childrenBooksTotal + fictionBooksTotal;
+      }
+    }
+
+    this.setState({ cartData: { ...this.state.cartData, totalBill, discount } });
   }
 
   addToCart = (book) => {
@@ -29,16 +74,26 @@ class App extends Component {
       cartItems.push({ ...book, count: 1 });
     }
     this.setState({ cartItems });
-
+    this.countTotalBill(cartItems);
   }
 
   removeFromCart = (book) => {
     const cartItems = this.state.cartItems.slice();
-    this.setState({ cartItems: cartItems.filter(item => item.id !== book.id) });
+    const newCartItems = cartItems.filter(item => item.id !== book.id);
+    this.setState({ cartItems: newCartItems });
+    this.countTotalBill(newCartItems);
   }
 
   updateCouponCode = (event) => {
-    this.setState({ couponCode: event.target.value });
+    this.setState({ cartData: { ...this.state.cartData, couponCode: event.target.value } });
+    setTimeout(
+      function () {
+        this.countTotalBill(this.state.cartItems);
+      }
+        .bind(this),
+      300
+    );
+
   }
 
   filterBooks = (event) => {
@@ -80,7 +135,9 @@ class App extends Component {
               <Cart cartItems={this.state.cartItems}
                 removeFromCart={this.removeFromCart}
                 updateCouponCode={this.updateCouponCode}
-                couponCode={this.state.couponCode} />
+                couponCode={this.state.cartData.couponCode}
+                totalBill={this.state.cartData.totalBill}
+                discount={this.state.cartData.discount} />
             </div>
           </div>
         </div >

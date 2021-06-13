@@ -1,47 +1,11 @@
 import React, { Component } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { BOOK_TYPE } from "../constants";
 
 export default class Cart extends Component {
 
-    renderTotal = () => {
-        const { cartItems } = this.props;
-        let childrenBooksCount = 0,
-            fictionBooksCount = 0,
-            childrenBooksTotal = 0,
-            fictionBooksTotal = 0,
-            totalBill = 0;
-
-        cartItems.forEach((book) => {
-            if (book.catagory === BOOK_TYPE.CHILDREN) {
-                childrenBooksCount += book.count;
-                childrenBooksTotal += book.count * book.price;
-            }
-            if (book.catagory === BOOK_TYPE.FICTION) {
-                fictionBooksCount += book.count;
-                fictionBooksTotal += book.count * book.price;
-            }
-        });
-
-        if (this.props.couponCode === "ABC") {
-            totalBill = (childrenBooksTotal + fictionBooksTotal) * 0.85;
-        } else {
-            if (childrenBooksCount >= 5) {
-                childrenBooksTotal = childrenBooksTotal * 0.9;
-            }
-
-            if (childrenBooksCount === 10 && fictionBooksCount === 10) {
-                totalBill = (childrenBooksTotal + fictionBooksTotal) * 0.95;
-            } else {
-                totalBill = childrenBooksTotal + fictionBooksTotal;
-            }
-        }
-
-        return totalBill;
-    }
     render() {
-        const { cartItems } = this.props;
+        const { cartItems, totalBill, discount } = this.props;
         return (
             <div>
                 <h4> <FontAwesomeIcon icon={faShoppingCart} /> Shopping Cart</h4>
@@ -103,8 +67,20 @@ export default class Cart extends Component {
                                 </div>
                             </span>
                             <span class="list-group-item list-group-item-action bg-yellow" aria-current="true">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">Total {this.renderTotal()}</h5>
+                                <div class=" ">
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <h5 class="mb-1">Total {totalBill}</h5>
+                                        </div>
+                                        <div class="col-sm-7 text-end">
+                                            {discount !== "" ? (
+                                                <small class="mb-1 ">{discount}  Discount Applied </small>
+                                            ) : (
+                                                <span />
+                                            )}
+                                        </div>
+                                    </div>
+
                                 </div>
                             </span>
                         </div>

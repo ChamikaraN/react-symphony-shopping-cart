@@ -12,7 +12,7 @@ class App extends Component {
     this.state = {
       category: "",
       books: data.books,
-      cartItems: [],
+      cartItems: (localStorage.getItem("cartItems") && JSON.parse(localStorage.getItem("cartItems")).length > 0) ? JSON.parse(localStorage.getItem("cartItems")) : [],
       cartData: {
         couponCode: "",
         totalBill: 0,
@@ -21,7 +21,9 @@ class App extends Component {
 
     };
   }
-
+  componentDidMount() {
+    (localStorage.getItem("cartItems") && JSON.parse(localStorage.getItem("cartItems")).length > 0) && this.countTotalBill(this.state.cartItems);
+  }
   countTotalBill = (cartItems) => {
     let childrenBooksCount = 0,
       fictionBooksCount = 0,
@@ -75,6 +77,7 @@ class App extends Component {
     }
     this.setState({ cartItems });
     this.countTotalBill(cartItems);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }
 
   removeFromCart = (book) => {
@@ -82,6 +85,8 @@ class App extends Component {
     const newCartItems = cartItems.filter(item => item.id !== book.id);
     this.setState({ cartItems: newCartItems });
     this.countTotalBill(newCartItems);
+    localStorage.setItem("cartItems", JSON.stringify(newCartItems));
+
   }
 
   updateCouponCode = (event) => {
